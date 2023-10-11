@@ -1,0 +1,28 @@
+---
+- name: multi-module
+  hosts: all
+  become: true
+  tasks:
+  - name: install httpd
+    ansible.builtin.yum:
+      name: httpd
+      state: latest
+  - name: Touch a file 
+    ansible.builtin.file:
+      path: /var/www/html/index.html
+      state: touch
+  - name: Inserting content in file
+    ansible.builtin.blockinfile:
+      path: /var/www/html/index.html
+      mode: "0744"
+      owner: apache
+      group: apache
+      block: |
+        Welcome to XfusionCorp!
+        This is Nautilus sample file, created using Ansible!
+        Please do not modify this file manually!
+  - name: httpd service enabled
+    ansible.builtin.service:
+        name: httpd
+        enabled: true
+        state: started
