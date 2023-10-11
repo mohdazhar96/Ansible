@@ -1,0 +1,13 @@
+#Ansible unarchive module
+---
+- name: ansible-playbook
+  hosts: all
+  become: true
+  tasks:
+  - name: unarchive
+    ansible.builtin.unarchive:
+      path: /usr/src/news.gz
+      dest: /opt/dba
+      owner: "{{ ansible_user }}"
+	  group: "{{ ansible_user }}"
+	  mode: "0755"
