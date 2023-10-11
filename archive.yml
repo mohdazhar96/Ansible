@@ -1,0 +1,12 @@
+---
+- name: ansible-playbook
+  hosts: all
+  become: true
+  tasks:
+  - name: Use gzip to compress a single archive (i.e don't archive it first with tar)
+    community.general.archive:
+      path: /usr/src/dba
+      dest: /opt/dba/beta.tar.gz
+      format: gz
+      force_archive: true
+      owner: "{{ ansible_user }}"
