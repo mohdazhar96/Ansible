@@ -1,0 +1,44 @@
+---
+- name: acl permissions
+  hosts: all
+  become: true
+  tasks:
+  - name: touch
+    when: inventory_hostname =="stapp01"
+    ansible.builtin.file:
+      path: /opt/security/blog.txt
+      state: touch
+  - name: touch
+    when: inventory_hostname =="stapp02"
+    ansible.builtin.file:
+      path: /opt/security/story.txt
+      state: touch
+  - name: touch
+    when: inventory_hostname =="stapp03"
+    ansible.builtin.file:
+      path: /opt/security/media.txt
+      state: touch
+  - name: file
+    when: inventory_hostname =="stapp01"
+    acl:
+      path: /opt/security/blog.txt
+      entity: tony
+      etype: group
+      permissions: r
+      state: present
+  - name: Grant user Joe read access to a file
+    acl:
+      path: /opt/security/story.txt
+      entity: steve
+      etype: user
+      permissions: rw
+      state: present
+    when: inventory_hostname =="stapp02"
+  - name: Grant user Joe read access to a file
+    acl:
+      path: /opt/security/media.txt
+      entity: banner
+      etype: group
+      permissions: rw
+      state: present 
+    when: inventory_hostname =="stapp03"
