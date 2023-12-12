@@ -1,0 +1,13 @@
+---
+- hosts: all
+  name: install ftp
+  become: true
+  tasks:
+  - name: ftp
+    yum:
+      name: vsftpd
+      state: present
+  - name: iftp
+    ansible.builtin.shell: systemctl enable vsftpd  
+  - name: iftp
+    ansible.builtin.shell: systemctl start vsftpd 
