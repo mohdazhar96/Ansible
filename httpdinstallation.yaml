@@ -1,0 +1,17 @@
+---
+- hosts: all
+  name: myplaybook
+  become: true
+  tasks:
+  - name: install httpd
+    yum:
+      name: httpd
+      state: present
+  - name: start httpd
+    shell: systemctl start httpd
+  - name: Add content to /var/www/html/index.html
+    lineinfile:
+      path: /var/www/html/index.html
+      insertbefore: BOF
+      line: 'Welcome to xFusionCorp Industries!'
+      mode: 0644
