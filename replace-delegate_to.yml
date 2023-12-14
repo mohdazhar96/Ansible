@@ -1,0 +1,23 @@
+---
+- hosts: all
+  name: replace module playbook
+  become: true
+  tasks:
+  - name: replace on host1
+    delegate_to: stapp01 
+    replace: 
+      path: /opt/data/blog.txt
+      regexp: 'xFusionCorp'
+      replace: 'Nautilus'
+  - name: replace on host2
+    delegate_to: stapp02
+    replace: 
+      path: /opt/data/story.txt
+      regexp: 'Nautilus'
+      replace: 'KodeKloud'
+  - name: replace on host2
+    delegate_to: stapp03
+    replace: 
+      path: /opt/data/media.txt
+      regexp: 'KodeKloud'
+      replace: 'xFusionCorp Industries'
