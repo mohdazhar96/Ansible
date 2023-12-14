@@ -1,3 +1,4 @@
+# use delegate_to parameter when you want to execute the specific task on specific host
 ---
 - hosts: all
   name: replace module playbook
