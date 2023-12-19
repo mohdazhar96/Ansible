@@ -1,0 +1,9 @@
+---
+- name: copy module
+  hosts: all
+  become: true
+  tasks: 
+  - name: Copy file 
+    ansible.builtin.copy:
+      src: /usr/src/dba/index.html
+      dest: /opt/dba
