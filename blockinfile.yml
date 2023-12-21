@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: yes
+  name: blockinfile gatherfacts
+  tasks:
+  - name: Insert/Update eth0 configuration 
+    ansible.builtin.blockinfile:
+      path: /root/facts.txt
+      create: true
+      block: |
+        Ansible managed node architecture is {{ansible_architecture}}
+  - name: install httpd
+    yum:
+      name: httpd
+      state: present
+  - name: copy
+    shell: cp /root/facts.txt /var/www/html/index.html
+  - name: service start
+    service:
+      name: httpd
+      state: started
