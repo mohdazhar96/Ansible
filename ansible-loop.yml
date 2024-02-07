@@ -1,0 +1,33 @@
+---
+- name: add_users
+  hosts: pp03
+  become: true
+  tasks:
+  - name: create uses and groups
+    group:
+     name: developers
+     state: present
+  - name: create another group
+    group:
+     name: admins
+     state: present  
+  - name: Adding the the users to first group
+    ansible.builtin.user:
+      name: "{{ item }}"
+      password: "{{ 'ksH85UJjhb' | password_hash('sha512') }}"
+      groups: developers
+      home: /var/www/"{{ item }}"
+    loop:
+    - rob
+    - joy
+    - david
+  - name: adding second group users
+    ansible.builtin.user:
+      name: "{{ item }}"
+      password: "{{ 'ksH85UJjhb' | password_hash('sha512')}}"
+      groups: admins, wheel
+    loop:
+    - tim
+    - ray
+    - jim
+    - mark
